@@ -1,290 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>开发者工具与技术笔记</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, "Microsoft YaHei", sans-serif;
-            background: #f5f7fa;
-            color: #333;
-        }
-
-        /* 顶部导航 */
-        header {
-            background: white;
-            border-bottom: 1px solid #ddd;
-        }
-
-        nav {
-            max-width: 1100px;
-            margin: auto;
-            height: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .nav-links a {
-            margin-left: 25px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .nav-links a:hover {
-            color: #1677ff;
-        }
-
-        /* 首页介绍 */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: white;
-        }
-
-        .hero h1 {
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            color: #666;
-            font-size: 18px;
-        }
-
-        /* 内容区域 */
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 50px 20px;
-        }
-
-        section {
-            margin-bottom: 60px;
-        }
-
-        section h2 {
-            margin-bottom: 25px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 25px;
-            border: 1px solid #eee;
-            transition: 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #777;
-            line-height: 1.7;
-        }
-
-        .card a {
-            text-decoration: none;
-            color: #1677ff;
-        }
-
-        /* 页脚 */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: white;
-            border-top: 1px solid #ddd;
-            color: #888;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bapenghui 的个人网站</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 680px;
+      margin: 60px auto;
+      padding: 0 20px;
+      line-height: 1.7;
+      color: #333;
+    }
+    h1 {
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-
-    <nav>
-
-        <div class="logo">
-            Dev Tools
-        </div>
-
-        <div class="nav-links">
-            <a href="#tools">在线工具</a>
-            <a href="#articles">技术文章</a>
-            <a href="#projects">项目</a>
-        </div>
-
-    </nav>
-
-</header>
-
-
-<!-- 首页 -->
-
-<section class="hero">
-
-    <h1>开发者工具与技术笔记</h1>
-
-    <p>
-        在线工具 · C++ · Linux · MQTT · ROS2 · VDA5050
-    </p>
-
-</section>
-
-
-<div class="container">
-
-
-    <!-- 在线工具 -->
-
-    <section id="tools">
-
-        <h2>在线工具</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <h3>JSON 格式化</h3>
-                <p>格式化、校验 JSON 数据。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-            <div class="card">
-                <h3>时间戳转换</h3>
-                <p>Unix 时间戳与日期时间相互转换。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-            <div class="card">
-                <h3>Base64 编解码</h3>
-                <p>进行 Base64 编码和解码。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-            <div class="card">
-                <h3>UUID 生成</h3>
-                <p>快速生成 UUID。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-            <div class="card">
-                <h3>文本 Diff</h3>
-                <p>比较两段文本之间的差异。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-            <div class="card">
-                <h3>二维码生成</h3>
-                <p>输入文本或网址生成二维码。</p>
-                <a href="#">使用工具 →</a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- 技术文章 -->
-
-    <section id="articles">
-
-        <h2>技术文章</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <h3>C++</h3>
-                <p>C++ 开发、设计与常用技术。</p>
-            </div>
-
-            <div class="card">
-                <h3>Linux</h3>
-                <p>Linux 开发环境、网络与系统使用。</p>
-            </div>
-
-            <div class="card">
-                <h3>MQTT</h3>
-                <p>MQTT 通信协议与实际应用。</p>
-            </div>
-
-            <div class="card">
-                <h3>ROS2</h3>
-                <p>ROS2 机器人软件开发相关内容。</p>
-            </div>
-
-            <div class="card">
-                <h3>VDA5050</h3>
-                <p>AGV 与 RCS 通信协议相关内容。</p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- 项目 -->
-
-    <section id="projects">
-
-        <h2>项目</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <h3>开源项目</h3>
-                <p>整理和展示公开的开发项目。</p>
-            </div>
-
-            <div class="card">
-                <h3>工具项目</h3>
-                <p>开发过程中积累的小工具。</p>
-            </div>
-
-            <div class="card">
-                <h3>Demo</h3>
-                <p>技术验证、算法和功能 Demo。</p>
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<footer>
-    © 2026 Dev Tools
-</footer>
-
-
+  <h1>你好！！！</h1>
+  <p class="subtitle">这是我的个人网站</p>
+  
+  <p>欢迎访问！网站正在建设中。</p>
+  
+  <p>你可以在这里放简介、作品、联系方式等内容。</p>
 </body>
 </html>
