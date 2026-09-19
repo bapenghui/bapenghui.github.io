@@ -112,6 +112,28 @@ h3 {
   min-width: 0;
 }
 
+@media (min-width: 56.01rem) {
+  .overview-page,
+  .overview-page .site-frame,
+  .overview-page .site-stage,
+  .overview-page main {
+    height: 100svh;
+    min-height: 0;
+  }
+
+  .overview-page {
+    overflow: hidden;
+  }
+
+  .overview-page .site-stage {
+    overflow: hidden;
+  }
+
+  .overview-page .site-footer {
+    display: none;
+  }
+}
+
 .site-header {
   position: sticky;
   z-index: 20;
