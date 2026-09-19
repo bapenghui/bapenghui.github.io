@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import TagList from '../../components/TagList.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+
+export async function getStaticPaths() {
+  const entries = sortByUpdatedDesc(
+    (await getCollection('writing')).filter(({ data }) => isPublicEntry(data)),
+  );
+
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'writing'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article>
+    <header class="article-header shell">
+      <a class="back-link" href="/writing/">← 返回写作</a>
+      <p class="eyebrow">{data.category} · {data.sample ? '内容样例' : '已发布'}</p>
+      <h1>{data.title}</h1>
+      <p class="article-summary">{data.summary}</p>
+      <div class="article-meta">
+        <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+        <span>{data.readingMinutes} 分钟阅读</span>
+      </div>
+      <TagList tags={data.tags} />
+    </header>
+    <div class="article-body shell">
+      <div class="prose"><Content /></div>
+    </div>
+  </article>
+</BaseLayout>

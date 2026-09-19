@@ -1,0 +1,13 @@
+title: 机器人实验台
+summary: 项目模块、连接与测试过程的视觉记录。
+publishedAt: 2026-09-16
+updatedAt: 2026-09-16
+tags: [机器人, 实验]
+alt: 深色实验台上的机器人结构与橙色连接节点示意图
+src: /images/robot-lab.svg
+category: 项目
+accent: rust
+orientation: landscape
+featured: true
+sample: true
+relatedProjects: [inspection-robot]

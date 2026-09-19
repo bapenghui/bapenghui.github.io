@@ -1,0 +1,13 @@
+title: 边缘设备测试
+summary: 记录模型部署时的设备、线缆和性能观察。
+publishedAt: 2026-09-14
+updatedAt: 2026-09-14
+tags: [Jetson, 边缘计算]
+alt: 蓝绿色边缘计算设备和数据流线条示意图
+src: /images/edge-device.svg
+category: 技术
+accent: blue
+orientation: portrait
+featured: true
+sample: true
+relatedProjects: [inspection-robot]

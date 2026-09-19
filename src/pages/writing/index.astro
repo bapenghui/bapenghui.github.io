@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import PageIntro from '../../components/PageIntro.astro';
+import WritingCard from '../../components/WritingCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+
+const entries = sortByUpdatedDesc(
+  (await getCollection('writing')).filter(({ data }) => isPublicEntry(data)),
+);
+---
+
+<BaseLayout title="写作" description="技术实践、项目思考和阶段性记录。">
+  <PageIntro eyebrow="Writing / 写作" title="把实践整理成可以复用的认识。" description="这里收录技术笔记、项目复盘和一些仍在形成中的想法。" />
+  <section class="shell writing-list" aria-label="文章列表">
+    {entries.map((entry) => <WritingCard entry={entry} />)}
+  </section>
+</BaseLayout>

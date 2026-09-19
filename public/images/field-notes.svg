@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">现场笔记示例视觉</title><desc id="desc">米色纸面上的笔记线条和绿色标记</desc>
+  <rect width="900" height="900" fill="#c9b99d"/><path d="M150 105h600v690H150z" fill="#f7f2e8" transform="rotate(-3 450 450)"/><g stroke="#4a514a" stroke-width="15" stroke-linecap="round"><path d="M245 250h370M245 330h470M245 410h390M245 570h450M245 650h310"/></g><path d="M230 475c95-30 210-23 310 4" fill="none" stroke="#758c78" stroke-width="42" stroke-linecap="round" opacity=".75"/><circle cx="655" cy="665" r="65" fill="none" stroke="#d34a2f" stroke-width="18"/>
+</svg>

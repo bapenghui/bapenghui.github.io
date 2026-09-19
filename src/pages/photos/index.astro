@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import PageIntro from '../../components/PageIntro.astro';
+import TagList from '../../components/TagList.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+
+const photos = sortByUpdatedDesc(
+  (await getCollection('photos')).filter(({ data }) => isPublicEntry(data)),
+);
+---
+
+<BaseLayout title="图片" description="技术、项目与生活中的视觉记录。">
+  <PageIntro eyebrow="Photos / 图片" title="一些值得留下来的画面。" description="技术现场、项目过程和生活片段。当前使用示例视觉，后续可替换为真实图片。" />
+  <div class="shell photo-grid">
+    {photos.map(({ data }, index) => (
+      <figure class:list={['photo-card', `photo-${data.orientation}`]}>
+        <div class="photo-frame">
+          <img src={data.src} alt={data.alt} loading={index > 1 ? 'lazy' : 'eager'} />
+          {data.sample && <span class="sample-chip">示例视觉</span>}
+        </div>
+        <figcaption>
+          <div>
+            <p>{data.category} · <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time></p>
+            <h2>{data.title}</h2>
+            <p>{data.summary}</p>
+          </div>
+          <TagList tags={data.tags} />
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</BaseLayout>

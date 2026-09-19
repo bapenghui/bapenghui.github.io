@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import PageIntro from '../../components/PageIntro.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+
+const projects = sortByUpdatedDesc(
+  (await getCollection('projects')).filter(({ data }) => isPublicEntry(data)),
+);
+---
+
+<BaseLayout title="项目" description="正在研究、构建和持续推进的项目。">
+  <PageIntro eyebrow="Projects / 项目" title="正在把想法变成东西。" description="这里记录研究、实验和长期项目，也保留过程中的问题与转向。" />
+  <section class="shell project-list" aria-label="项目列表">
+    {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+  </section>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import TagList from '../../components/TagList.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+import { PROJECT_STATUS } from '../../lib/project-status';
+
+export async function getStaticPaths() {
+  const projects = sortByUpdatedDesc(
+    (await getCollection('projects')).filter(({ data }) => isPublicEntry(data)),
+  );
+
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { data } = project;
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article>
+    <header class="project-hero shell" data-accent={data.accent}>
+      <a class="back-link" href="/projects/">← 返回项目</a>
+      <div class="project-hero-grid">
+        <div>
+          <p class="eyebrow">{PROJECT_STATUS[data.status]} · {data.sample ? '内容样例' : '当前项目'}</p>
+          <h1>{data.title}</h1>
+          <p class="project-lede">{data.summary}</p>
+          <TagList tags={data.tags} />
+        </div>
+        <aside class="project-fact" aria-label="项目当前状态">
+          <p>当前重点</p>
+          <strong>{data.currentFocus}</strong>
+          <dl>
+            <div><dt>状态</dt><dd>{PROJECT_STATUS[data.status]}</dd></div>
+            <div><dt>更新</dt><dd><time datetime={data.updatedAt.toISOString()}>{formatDate(data.updatedAt)}</time></dd></div>
+          </dl>
+        </aside>
+      </div>
+    </header>
+
+    <div class="project-detail shell">
+      <div class="prose"><Content /></div>
+      {data.timeline.length > 0 && (
+        <aside class="timeline" aria-labelledby="timeline-title">
+          <h2 id="timeline-title">时间线</h2>
+          <ol>
+            {data.timeline.toReversed().map((event) => (
+              <li>
+                <time datetime={event.date.toISOString()}>{formatDate(event.date)}</time>
+                <p>{event.text}</p>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      )}
+    </div>
+  </article>
+</BaseLayout>

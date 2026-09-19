@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">机器人实验台示例视觉</title><desc id="desc">深色网格上的机械结构和橙色连接节点</desc>
+  <rect width="1200" height="800" fill="#222923"/><g stroke="#59635b" opacity=".32"><path d="M0 100h1200M0 200h1200M0 300h1200M0 400h1200M0 500h1200M0 600h1200M0 700h1200"/><path d="M100 0v800M200 0v800M300 0v800M400 0v800M500 0v800M600 0v800M700 0v800M800 0v800M900 0v800M1000 0v800M1100 0v800"/></g>
+  <g fill="none" stroke="#f4f0e8" stroke-width="20" stroke-linecap="round"><path d="M270 570l180-250 210 90 190-220"/><path d="M660 410l210 170"/></g><g fill="#ef7458" stroke="#222923" stroke-width="12"><circle cx="270" cy="570" r="38"/><circle cx="450" cy="320" r="38"/><circle cx="660" cy="410" r="38"/><circle cx="850" cy="190" r="38"/><circle cx="870" cy="580" r="38"/></g><path d="M155 650h890" stroke="#91aa94" stroke-width="16"/>
+</svg>

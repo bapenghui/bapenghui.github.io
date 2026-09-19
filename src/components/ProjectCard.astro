@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content-utils';
+import { PROJECT_STATUS } from '../lib/project-status';
+import TagList from './TagList.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+const { data } = project;
+---
+
+<article class="project-card" data-accent={data.accent}>
+  <a class="project-card-link" href={`/projects/${project.id}/`} aria-label={`查看项目：${data.title}`}>
+    <span class="project-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+    <div class="project-card-body">
+      <div class="project-card-meta">
+        <span class="status-mark"><span aria-hidden="true"></span>{PROJECT_STATUS[data.status]}</span>
+        {data.sample && <span>内容样例</span>}
+        <time datetime={data.updatedAt.toISOString()}>{formatDate(data.updatedAt)}</time>
+      </div>
+      <h2>{data.title}</h2>
+      <p>{data.summary}</p>
+      <TagList tags={data.tags} />
+    </div>
+    <span class="arrow" aria-hidden="true">↗</span>
+  </a>
+</article>

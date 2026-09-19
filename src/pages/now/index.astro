@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import { formatDate, isPublicEntry, sortByUpdatedDesc } from '../../lib/content-utils';
+import { PROJECT_STATUS } from '../../lib/project-status';
+
+const activeProjects = sortByUpdatedDesc(
+  (await getCollection('projects')).filter(({ data }) =>
+    isPublicEntry(data) && ['researching', 'in-progress'].includes(data.status)
+  ),
+);
+const updatedAt = new Date('2026-09-19T00:00:00+08:00');
+---
+
+<BaseLayout title="现在" description="当前正在学习、推进和关注的事情。">
+  <PageIntro eyebrow="Now / 现在" title="当前阶段的我。" description="不是周报，只是一张持续更新的当前状态快照。" />
+  <div class="shell now-layout">
+    <section class="now-lead">
+      <p class="eyebrow">Current focus</p>
+      <h2>正在把个人站从规划变成一个可以持续更新的空间。</h2>
+      <p>同时继续关注机器人 Agent、边缘视觉模型和多机器人平台。先完成清晰的小闭环，再逐步增加复杂度。</p>
+    </section>
+    <div class="now-grid">
+      <section>
+        <p class="now-number">01</p>
+        <h2>正在做</h2>
+        <ul class="now-projects">
+          {activeProjects.map((project) => (
+            <li>
+              <a href={`/projects/${project.id}/`}>
+                <strong>{project.data.title}</strong>
+                <span>{PROJECT_STATUS[project.data.status]} · {project.data.currentFocus}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <p class="now-number">02</p>
+        <h2>正在学</h2>
+        <ul class="plain-list">
+          <li>机器人 Agent 的任务边界与确认机制</li>
+          <li>视觉模型在边缘设备上的稳定部署</li>
+          <li>内容型个人站的长期维护方式</li>
+        </ul>
+      </section>
+      <section>
+        <p class="now-number">03</p>
+        <h2>最近关注</h2>
+        <ul class="plain-list">
+          <li>具身智能</li>
+          <li>多机器人系统</li>
+          <li>技术写作与知识沉淀</li>
+        </ul>
+      </section>
+      <section>
+        <p class="now-number">04</p>
+        <h2>生活</h2>
+        <p>保持正常的开发与学习节奏，也给散步、拍照和不带目标的阅读留出时间。</p>
+      </section>
+    </div>
+    <p class="now-updated">更新于 <time datetime={updatedAt.toISOString()}>{formatDate(updatedAt)}</time></p>
+  </div>
+</BaseLayout>

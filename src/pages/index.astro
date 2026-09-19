@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WritingCard from '../components/WritingCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { isPublicEntry, sortByUpdatedDesc } from '../lib/content-utils';
+
+const projects = sortByUpdatedDesc(
+  (await getCollection('projects')).filter(({ data }) => isPublicEntry(data) && data.featured),
+).slice(0, 3);
+const writing = sortByUpdatedDesc(
+  (await getCollection('writing')).filter(({ data }) => isPublicEntry(data) && data.featured),
+).slice(0, 2);
+const photos = sortByUpdatedDesc(
+  (await getCollection('photos')).filter(({ data }) => isPublicEntry(data) && data.featured),
+).slice(0, 3);
+---
+
+<BaseLayout>
+  <section class="home-hero shell">
+    <div class="home-hero-main">
+      <p class="eyebrow">Engineer · Builder · Observer</p>
+      <h1>Bapenghui</h1>
+      <p>记录技术、项目、写作，<br />以及正在发生的事情。</p>
+    </div>
+    <aside class="home-now" aria-label="当前状态">
+      <p><span aria-hidden="true"></span> 当前正在进行</p>
+      <strong>构建个人数字空间，研究机器人 Agent 与边缘视觉。</strong>
+      <a href="/now/">查看现在页 <span aria-hidden="true">→</span></a>
+    </aside>
+  </section>
+
+  <section class="home-section shell">
+    <SectionHeading eyebrow="Selected projects" title="最近推进的项目" href="/projects/" />
+    <div class="project-list">
+      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    </div>
+  </section>
+
+  <section class="home-section shell">
+    <SectionHeading eyebrow="Recent writing" title="最近写下的内容" href="/writing/" />
+    <div class="writing-list home-writing">
+      {writing.map((entry) => <WritingCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="home-section shell">
+    <SectionHeading eyebrow="Visual notes" title="最近留下的画面" href="/photos/" />
+    <div class="home-photos">
+      {photos.map(({ data }) => (
+        <figure>
+          <img src={data.src} alt={data.alt} loading="lazy" />
+          <figcaption>{data.title}<span>{data.category}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

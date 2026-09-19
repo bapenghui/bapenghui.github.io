@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content-utils';
+import TagList from './TagList.astro';
+
+interface Props {
+  entry: CollectionEntry<'writing'>;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+---
+
+<article class="writing-card">
+  <div class="writing-card-meta">
+    <span>{data.category}</span>
+    <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+    <span>{data.readingMinutes} 分钟阅读</span>
+    {data.sample && <span>内容样例</span>}
+  </div>
+  <h2><a href={`/writing/${entry.id}/`}>{data.title}</a></h2>
+  <p>{data.summary}</p>
+  <TagList tags={data.tags} />
+</article>
