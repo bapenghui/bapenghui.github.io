@@ -31,10 +31,14 @@ const canonicalURL = new URL(Astro.url.pathname, SITE.url);
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到正文</a>
-    <SiteHeader pathname={Astro.url.pathname} />
-    <main id="main-content">
-      <slot />
-    </main>
-    <SiteFooter />
+    <div class="site-frame">
+      <SiteHeader pathname={Astro.url.pathname} />
+      <div class="site-stage">
+        <main id="main-content">
+          <slot />
+        </main>
+        <SiteFooter />
+      </div>
+    </div>
   </body>
 </html>

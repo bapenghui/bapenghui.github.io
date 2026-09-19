@@ -10,21 +10,24 @@ const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.s
 ---
 
 <header class="site-header">
-  <div class="shell nav-shell">
+  <div class="nav-shell">
     <a class="wordmark" href="/" aria-label={`${SITE.name} 首页`}>
       <span class="wordmark-dot" aria-hidden="true"></span>
       {SITE.name}
     </a>
     <nav aria-label="主导航">
+      <p class="nav-label">Navigation</p>
       <ul class="nav-list">
-        {NAV_ITEMS.map((item) => (
+        {NAV_ITEMS.map((item, index) => (
           <li>
             <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              {item.label}
+              <span class="nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span>{item.label}</span>
             </a>
           </li>
         ))}
       </ul>
     </nav>
+    <p class="rail-caption">个人数字空间<br />持续记录与生长</p>
   </div>
 </header>
