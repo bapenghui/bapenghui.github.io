@@ -63,6 +63,15 @@ Deno.serve(async (request: Request) => {
     const input = normalizeFinalizePhotoInput(await request.json(), userData.user.id);
     if (!input.ok) return jsonError(input.error.code, input.error.message, 400, cors);
 
+    const stagingExtension = input.value.stagingPath.split('.').at(-1);
+    const publishedPath = `published/${userData.user.id}/${idempotencyKey}.${stagingExtension}`;
+    const { data: existingPhoto } = await serviceClient
+      .from('photos')
+      .select('*')
+      .eq('storage_path', publishedPath)
+      .maybeSingle();
+    if (existingPhoto) return json({ data: { photo: existingPhoto, evictedStoragePath: null } }, 200, cors);
+
     const { data: stagingBlob, error: downloadError } = await serviceClient.storage
       .from('photos')
       .download(input.value.stagingPath);
@@ -75,14 +84,9 @@ Deno.serve(async (request: Request) => {
     if (!mimeType) {
       return jsonError('UNSUPPORTED_FILE_SIGNATURE', '文件内容不是受支持的图片格式。', 400, cors);
     }
-
-    const publishedPath = `published/${userData.user.id}/${idempotencyKey}.${extensionForMimeType(mimeType)}`;
-    const { data: existingPhoto } = await serviceClient
-      .from('photos')
-      .select('*')
-      .eq('storage_path', publishedPath)
-      .maybeSingle();
-    if (existingPhoto) return json({ data: { photo: existingPhoto, evictedStoragePath: null } }, 200, cors);
+    if (extensionForMimeType(mimeType) !== stagingExtension) {
+      return jsonError('FILE_TYPE_MISMATCH', '文件内容与所选图片格式不一致。', 400, cors);
+    }
 
     const { error: uploadError } = await serviceClient.storage
       .from('photos')
