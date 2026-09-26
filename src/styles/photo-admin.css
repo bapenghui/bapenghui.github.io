@@ -395,6 +395,75 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 
 .admin-upload-actions > span { color: var(--color-muted); font-size: 0.74rem; }
 
+.admin-import-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.admin-import-search label { display: grid; gap: 0.35rem; font-size: 0.76rem; font-weight: 700; }
+.admin-import-search input {
+  min-height: 2.75rem;
+  padding: 0.68rem 0.8rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+.admin-import-permission { margin: 0.55rem 0 0; color: var(--color-muted); font-size: 0.7rem; }
+
+.admin-import-candidates {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.55rem;
+  max-height: 20rem;
+  margin-top: 1rem;
+  overflow-y: auto;
+}
+.admin-import-candidate {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--color-canvas);
+  cursor: pointer;
+}
+.admin-import-candidate img { width: 100%; height: 100%; object-fit: cover; }
+.admin-import-candidate:hover,
+.admin-import-candidate:focus-visible,
+.admin-import-candidate[data-selected='true'] { border-color: var(--color-accent); }
+.admin-import-candidate[data-selected='true']::after {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.35rem;
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: #fff;
+  content: '✓';
+  font-size: 0.7rem;
+}
+.admin-import-selection {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.7fr) minmax(22rem, 1.3fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+.admin-import-selection figure { margin: 0; }
+.admin-import-selection figure img { width: 100%; height: 18rem; border-radius: var(--radius-md); object-fit: cover; }
+.admin-import-selection figcaption { margin-top: 0.5rem; color: var(--color-muted); font-size: 0.66rem; overflow-wrap: anywhere; }
+.admin-import-selection .admin-form-grid,
+.admin-import-selection .admin-upload-toggles,
+.admin-import-selection .admin-upload-capacity { grid-column: 2; }
+
 .admin-delete-dialog::backdrop { background: rgb(18 20 28 / 0.55); backdrop-filter: blur(0.3rem); }
 .admin-delete-dialog form { padding: 2rem; }
 .admin-delete-dialog h2 { margin: 0.35rem 0 0.75rem; font-size: 1.65rem; }
@@ -419,9 +488,15 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .admin-toggle-grid { grid-template-columns: 1fr; }
   .admin-field-wide { grid-column: auto; }
   .admin-upload-selection { grid-template-columns: 1fr; }
+  .admin-import-selection { grid-template-columns: 1fr; }
   .admin-upload-selection .admin-form-grid,
   .admin-upload-selection .admin-upload-toggles,
   .admin-upload-selection .admin-upload-capacity { grid-column: 1; }
+  .admin-import-selection .admin-form-grid,
+  .admin-import-selection .admin-upload-toggles,
+  .admin-import-selection .admin-upload-capacity { grid-column: 1; }
+  .admin-import-candidates { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .admin-import-search { grid-template-columns: 1fr; }
   .admin-upload-selection figure img { height: 14rem; }
   .admin-upload-actions { align-items: flex-start; flex-direction: column; }
 }

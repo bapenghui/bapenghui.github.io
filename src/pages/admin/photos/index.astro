@@ -281,6 +281,61 @@ import '../../../styles/photo-admin.css';
         </div>
       </form>
     </dialog>
+
+    <dialog class="admin-upload-dialog admin-import-dialog" data-import-dialog>
+      <form data-import-form>
+        <header class="admin-dialog-header">
+          <div>
+            <p class="admin-kicker">Web import / 网页采集</p>
+            <h2>从公开网页挑选图片</h2>
+            <p>输入 HTTPS 页面地址，系统只提取候选，不会自动保存。</p>
+          </div>
+          <button class="admin-icon-button" type="button" data-import-close aria-label="关闭网页采集窗口">×</button>
+        </header>
+
+        <div class="admin-import-search">
+          <label>
+            <span>公开网页地址</span>
+            <input data-import-url type="url" inputmode="url" placeholder="https://example.com/gallery" required />
+          </label>
+          <button class="admin-secondary-button" type="button" data-import-extract>提取候选图片</button>
+        </div>
+        <p class="admin-import-permission">请只导入你有权使用的图片，并保留来源信息。</p>
+
+        <div class="admin-import-candidates" data-import-candidates hidden></div>
+
+        <div class="admin-import-selection" data-import-selection hidden>
+          <figure>
+            <img data-import-preview alt="选中的网页图片" referrerpolicy="no-referrer" />
+            <figcaption data-import-source></figcaption>
+          </figure>
+          <div class="admin-form-grid">
+            <label class="admin-field-wide"><span>标题</span><input name="importTitle" required maxlength="120" /></label>
+            <label class="admin-field-wide"><span>图片说明（无障碍文本）</span><input name="importAltText" required maxlength="240" /></label>
+            <label class="admin-field-wide"><span>摘要</span><textarea name="importSummary" rows="2" maxlength="600"></textarea></label>
+            <label><span>分类</span><input name="importCategory" required maxlength="40" value="灵感" /></label>
+            <label><span>标签（逗号分隔）</span><input name="importTags" maxlength="371" /></label>
+            <label><span>画面方向</span><select name="importOrientation"><option value="landscape">横向</option><option value="portrait">纵向</option><option value="square">方形</option></select></label>
+            <label><span>排序权重</span><input name="importSortOrder" type="number" step="1" value="0" /></label>
+          </div>
+          <fieldset class="admin-toggle-grid admin-upload-toggles">
+            <legend>保存选项</legend>
+            <label><input name="importIsPublished" type="checkbox" checked /><span><strong>立即发布</strong><small>关闭后保存为草稿</small></span></label>
+            <label><input name="importIsFeatured" type="checkbox" /><span><strong>首页精选</strong><small>加入首页图片预览候选</small></span></label>
+            <label><input name="importIsReserved" type="checkbox" /><span><strong>永久保留</strong><small>容量满时不会自动覆盖</small></span></label>
+          </fieldset>
+          <p class="admin-upload-capacity" data-import-capacity></p>
+        </div>
+
+        <div class="admin-upload-actions">
+          <span data-import-progress role="status" aria-live="polite"></span>
+          <div>
+            <button class="admin-quiet-button" type="button" data-import-cancel>取消</button>
+            <button class="admin-primary-button" type="submit" data-import-submit disabled>保存选中图片</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
   </div>
 
   <script>

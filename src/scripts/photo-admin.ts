@@ -9,6 +9,7 @@ import {
 import type { PhotoRecord } from '../lib/photos/contracts';
 import { getPhotoSupabaseClient } from '../lib/photos/supabase';
 import { createPhotoUploadController } from './photo-upload';
+import { createPhotoImportController } from './photo-import';
 
 type StatusTone = 'neutral' | 'success' | 'error' | 'warning';
 
@@ -76,9 +77,11 @@ function createAdminController(
       onSaved: loadPhotos,
       setStatus: (message, tone) => setStatus(status, message, tone),
     }).bind();
-    requiredElement(container, '[data-import-button]').addEventListener('click', () => {
-      setStatus(status, '网页采集面板正在接入候选预览流程。', 'neutral');
-    });
+    createPhotoImportController(container, client, {
+      getPhotos: () => photos,
+      onSaved: loadPhotos,
+      setStatus: (message, tone) => setStatus(status, message, tone),
+    }).bind();
   }
 
   function showLogin(): void {
