@@ -680,6 +680,52 @@ body:not(.overview-page) .now-grid > section {
 }
 
 @media (max-height: 48rem) and (min-width: 56.01rem) {
+  .workspace-home {
+    grid-template-rows: auto auto minmax(15rem, 1fr) auto;
+    gap: 0.45rem;
+    padding-block: 0.6rem;
+  }
+
+  .workspace-topbar {
+    min-height: 1.75rem;
+  }
+
+  .workspace-welcome h1 {
+    margin-bottom: 0.25rem;
+    font-size: clamp(2.5rem, 4.5vw, 3.25rem);
+  }
+
+  .workspace-welcome > p:last-of-type {
+    font-size: 0.72rem;
+  }
+
+  .workspace-welcome-note {
+    display: none;
+  }
+
+  .workspace-focus,
+  .workspace-glance {
+    gap: 0.35rem;
+  }
+
+  .workspace-section-heading h2 {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .workspace-section-heading p {
+    font-size: 0.58rem;
+  }
+
+  .workspace-board,
+  .workspace-glance-grid {
+    gap: 0.5rem;
+  }
+
+  .dashboard-card {
+    padding: 0.75rem 0.9rem;
+  }
+
   .dashboard-writing,
   .dashboard-now {
     padding-block: 0.75rem;
@@ -693,6 +739,34 @@ body:not(.overview-page) .now-grid > section {
   .dashboard-writing-list strong {
     margin: 0;
     font-size: 0.76rem;
+  }
+
+  .dashboard-now-link {
+    height: auto;
+    justify-content: flex-start;
+    padding-top: 0.2rem;
+  }
+
+  .dashboard-now-link strong {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .dashboard-now-link > span {
+    display: none;
+  }
+
+  .glance-card {
+    min-height: 5rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .glance-card > strong {
+    font-size: 1.75rem;
+  }
+
+  .glance-photo-strip img {
+    min-height: 3.5rem;
   }
 }
 
