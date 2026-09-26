@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import '../../../styles/photo-admin.css';
+---
+
+<BaseLayout
+  title="图片工作台"
+  description="仅供站点管理员使用的图片发布与整理工作台。"
+  pageClass="photo-admin-page"
+>
+  <div class="photo-admin shell" data-photo-admin>
+    <header class="admin-masthead">
+      <div>
+        <p class="admin-eyebrow">Private studio / 管理端</p>
+        <h1>图片工作台</h1>
+        <p>整理、保留与发布视觉记录。这里的修改会同步到公开图片页。</p>
+      </div>
+      <a class="admin-back-link" href="/photos/">查看公开图库 <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <div class="admin-notice" data-admin-status role="status" aria-live="polite">
+      正在检查管理端配置…
+    </div>
+
+    <section class="admin-login-card" data-auth-panel hidden>
+      <div class="admin-login-copy">
+        <span class="admin-kicker">Administrator only</span>
+        <h2>登录后开始整理</h2>
+        <p>账号由 Supabase Auth 管理。登录信息只发送到你的 Supabase 项目，不会写入本站或浏览器持久存储。</p>
+      </div>
+      <form class="admin-login-form" data-login-form>
+        <label>
+          <span>邮箱</span>
+          <input name="email" type="email" autocomplete="username" required />
+        </label>
+        <label>
+          <span>密码</span>
+          <input name="password" type="password" autocomplete="current-password" required minlength="12" />
+        </label>
+        <button class="admin-primary-button" type="submit">进入工作台</button>
+      </form>
+    </section>
+
+    <section class="admin-workspace" data-manager hidden>
+      <div class="admin-toolbar">
+        <div>
+          <span class="admin-kicker">Library control</span>
+          <h2>当前图片库</h2>
+        </div>
+        <div class="admin-toolbar-actions">
+          <button class="admin-secondary-button" type="button" data-upload-button>
+            <span aria-hidden="true">＋</span> 本地上传
+          </button>
+          <button class="admin-primary-button" type="button" data-import-button>
+            <span aria-hidden="true">↗</span> 网页采集
+          </button>
+          <button class="admin-quiet-button" type="button" data-sign-out>退出</button>
+        </div>
+      </div>
+
+      <div class="admin-capacity-grid" aria-label="图片容量概览">
+        <article>
+          <span>总计</span>
+          <strong><span data-capacity-total>0</span><small>/ 100</small></strong>
+        </article>
+        <article>
+          <span>已保留</span>
+          <strong data-capacity-reserved>0</strong>
+        </article>
+        <article>
+          <span>草稿</span>
+          <strong data-capacity-drafts>0</strong>
+        </article>
+        <article class="capacity-accent">
+          <span>剩余位置</span>
+          <strong data-capacity-available>100</strong>
+        </article>
+        <p data-capacity-note>图片库还有充足空间。</p>
+      </div>
+
+      <div class="admin-library-layout">
+        <section class="admin-library-panel" aria-labelledby="admin-library-heading">
+          <div class="admin-panel-heading">
+            <div>
+              <p class="admin-kicker">All records</p>
+              <h2 id="admin-library-heading">图片列表</h2>
+            </div>
+            <button class="admin-icon-button" type="button" data-refresh aria-label="刷新图片列表">↻</button>
+          </div>
+          <div class="admin-photo-list" data-photo-list>
+            <p class="admin-empty-state">图片加载后会显示在这里。</p>
+          </div>
+        </section>
+
+        <section class="admin-editor-panel" aria-labelledby="admin-editor-heading">
+          <div class="admin-editor-empty" data-editor-empty>
+            <span aria-hidden="true">◌</span>
+            <h2 id="admin-editor-heading">选择一张图片</h2>
+            <p>在左侧选择记录，然后编辑说明、分类、排序和发布状态。</p>
+          </div>
+
+          <form class="admin-editor" data-editor-form hidden>
+            <div class="admin-editor-preview">
+              <img data-editor-image alt="" />
+              <div>
+                <span class="admin-source-label" data-editor-source>本地上传</span>
+                <strong data-editor-file></strong>
+              </div>
+            </div>
+
+            <div class="admin-form-grid">
+              <label class="admin-field-wide">
+                <span>标题</span>
+                <input name="title" required maxlength="120" />
+              </label>
+              <label class="admin-field-wide">
+                <span>图片说明（无障碍文本）</span>
+                <input name="altText" required maxlength="240" />
+              </label>
+              <label class="admin-field-wide">
+                <span>摘要</span>
+                <textarea name="summary" rows="3" maxlength="600"></textarea>
+              </label>
+              <label>
+                <span>分类</span>
+                <input name="category" required maxlength="40" />
+              </label>
+              <label>
+                <span>标签（逗号分隔）</span>
+                <input name="tags" maxlength="371" />
+              </label>
+              <label>
+                <span>画面方向</span>
+                <select name="orientation">
+                  <option value="landscape">横向</option>
+                  <option value="portrait">纵向</option>
+                  <option value="square">方形</option>
+                </select>
+              </label>
+              <label>
+                <span>排序权重</span>
+                <input name="sortOrder" type="number" step="1" />
+              </label>
+            </div>
+
+            <fieldset class="admin-toggle-grid">
+              <legend>展示状态</legend>
+              <label>
+                <input name="isPublished" type="checkbox" />
+                <span><strong>公开发布</strong><small>访客可以在图片页看到</small></span>
+              </label>
+              <label>
+                <input name="isFeatured" type="checkbox" />
+                <span><strong>首页精选</strong><small>可进入首页图片预览</small></span>
+              </label>
+              <label>
+                <input name="isReserved" type="checkbox" />
+                <span><strong>永久保留</strong><small>达到 100 张时不会被自动覆盖</small></span>
+              </label>
+            </fieldset>
+
+            <div class="admin-editor-actions">
+              <button class="admin-danger-button" type="button" data-delete-button>删除图片</button>
+              <button class="admin-primary-button" type="submit">保存修改</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <dialog class="admin-delete-dialog" data-delete-dialog>
+      <form method="dialog" data-delete-form>
+        <span class="admin-dialog-mark" aria-hidden="true">!</span>
+        <p class="admin-kicker">Permanent action</p>
+        <h2>确认删除图片</h2>
+        <p data-delete-description></p>
+        <label>
+          <span>输入图片标题以确认</span>
+          <input data-delete-confirm autocomplete="off" />
+        </label>
+        <div>
+          <button class="admin-quiet-button" value="cancel">取消</button>
+          <button class="admin-danger-button" value="confirm" data-delete-confirm-button disabled>确认删除</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <script>
+    import '../../../scripts/photo-admin';
+  </script>
+</BaseLayout>
