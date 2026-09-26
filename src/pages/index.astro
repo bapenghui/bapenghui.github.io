@@ -1,10 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import ProjectCard from '../components/ProjectCard.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import WritingCard from '../components/WritingCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { isPublicEntry, sortByUpdatedDesc } from '../lib/content-utils';
+import { formatDate, isPublicEntry, sortByUpdatedDesc } from '../lib/content-utils';
+import { PROJECT_STATUS } from '../lib/project-status';
 
 const projects = sortByUpdatedDesc(
   (await getCollection('projects')).filter(({ data }) => isPublicEntry(data) && data.featured),
@@ -18,54 +16,117 @@ const photos = sortByUpdatedDesc(
 ---
 
 <BaseLayout pageClass="overview-page">
-  <div class="home-dashboard shell">
-    <section class="home-hero">
-      <div class="home-hero-main">
-        <p class="eyebrow">Engineer · Builder · Observer</p>
-        <h1>Bapenghui</h1>
-        <p>记录技术、项目、写作，以及正在发生的事情。</p>
-      </div>
-      <div class="home-hero-index" aria-label="站点栏目说明">
-        <span>01—04</span>
-        <p>四个持续更新的个人模块</p>
+  <div class="workspace-home shell">
+    <div class="workspace-topbar">
+      <p><span aria-hidden="true"></span> 个人站 · 内容工作台</p>
+      <a class="workspace-status" href="/now/">
+        <span aria-hidden="true"></span>
+        <strong>现在</strong>
+        内容持续更新
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a class="workspace-source" href="https://github.com/bapenghui/bapenghui.github.io">查看源码 ↗</a>
+    </div>
+
+    <header class="workspace-welcome">
+      <p class="workspace-kicker">Today</p>
+      <h1>今天，从这里开始。</h1>
+      <p>项目持续推进，想法持续记录，也留下沿途看见的画面。</p>
+    </header>
+
+    <section class="workspace-section workspace-focus" aria-labelledby="focus-heading">
+      <header class="workspace-section-heading">
+        <div>
+          <h2 id="focus-heading">今天要看的事</h2>
+          <p>{projects.length} 个项目推进中，{writing.length} 篇近期记录。</p>
+        </div>
+        <a href="/projects/">浏览全部 <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <div class="workspace-board">
+        <article class="dashboard-card dashboard-projects">
+          <header class="dashboard-card-heading">
+            <h3>近期项目</h3>
+            <span>{projects.length}</span>
+          </header>
+          <ul class="dashboard-project-list">
+            {projects.map(({ data, id }) => (
+              <li>
+                <a class="dashboard-project-row" href={`/projects/${id}/`} data-accent={data.accent}>
+                  <span class="dashboard-check" aria-hidden="true">✓</span>
+                  <span class="dashboard-row-copy">
+                    <strong>{data.title}</strong>
+                    <small>{data.summary}</small>
+                  </span>
+                  <span class="dashboard-row-meta">
+                    <span>{PROJECT_STATUS[data.status]}</span>
+                    <time datetime={data.updatedAt.toISOString()}>{formatDate(data.updatedAt)}</time>
+                  </span>
+                  <span class="dashboard-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="dashboard-card dashboard-writing">
+          <header class="dashboard-card-heading">
+            <h3>最近写作</h3>
+            <a href="/writing/">全部 <span aria-hidden="true">↗</span></a>
+          </header>
+          <ul class="dashboard-writing-list">
+            {writing.map(({ data, id }) => (
+              <li>
+                <a href={`/writing/${id}/`}>
+                  <span>{data.category} · {data.readingMinutes} 分钟</span>
+                  <strong>{data.title}</strong>
+                  <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="dashboard-card dashboard-now">
+          <header class="dashboard-card-heading">
+            <h3>现在</h3>
+            <span class="dashboard-live"><span aria-hidden="true"></span> 进行中</span>
+          </header>
+          <a class="dashboard-now-link" href="/now/">
+            <strong>构建个人数字空间，研究机器人 Agent 与边缘视觉。</strong>
+            <span>查看当前关注与下一步 <span aria-hidden="true">↗</span></span>
+          </a>
+        </article>
       </div>
     </section>
 
-    <div class="home-overview" aria-label="总览模块">
-      <section class="home-module home-module-projects">
-        <SectionHeading eyebrow="01 / Selected projects" title="最近推进的项目" href="/projects/" linkLabel="进入项目" />
-        <div class="project-list">
-          {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    <section class="workspace-section workspace-glance" aria-labelledby="glance-heading">
+      <header class="workspace-section-heading">
+        <div>
+          <h2 id="glance-heading">个人内容一览</h2>
+          <p>项目、写作与视觉记录，都从这里进入。</p>
         </div>
-      </section>
+      </header>
 
-      <section class="home-module home-module-writing">
-        <SectionHeading eyebrow="02 / Recent writing" title="最近写下的内容" href="/writing/" linkLabel="进入写作" />
-        <div class="writing-list home-writing">
-          {writing.map((entry) => <WritingCard entry={entry} />)}
-        </div>
-      </section>
-
-      <section class="home-module home-module-now">
-        <SectionHeading eyebrow="03 / Now" title="此刻正在发生" href="/now/" linkLabel="查看现在" />
-        <div class="home-now-status">
-          <p><span aria-hidden="true"></span> 当前正在进行</p>
-          <strong>构建个人数字空间，研究机器人 Agent 与边缘视觉。</strong>
-          <p>持续整理项目进展、学习方向和接下来要解决的问题。</p>
-        </div>
-      </section>
-
-      <section class="home-module home-module-photos">
-        <SectionHeading eyebrow="04 / Visual notes" title="最近留下的画面" href="/photos/" linkLabel="进入图片" />
-        <div class="home-photos">
-          {photos.map(({ data }) => (
-            <figure>
-              <img src={data.src} alt={data.alt} loading="lazy" />
-              <figcaption>{data.title}<span>{data.category}</span></figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-    </div>
+      <div class="workspace-glance-grid">
+        <a class="glance-card" href="/projects/">
+          <span>公开项目</span>
+          <strong>{projects.length}</strong>
+          <small>持续整理工程过程</small>
+        </a>
+        <a class="glance-card" href="/writing/">
+          <span>近期写作</span>
+          <strong>{writing.length}</strong>
+          <small>技术笔记与长期思考</small>
+        </a>
+        <a class="glance-card glance-photos" href="/photos/">
+          <span>最近图片</span>
+          <span class="glance-photo-strip">
+            {photos.map(({ data }) => <img src={data.src} alt={data.alt} loading="lazy" />)}
+          </span>
+          <small>{photos.length} 组视觉记录 <span aria-hidden="true">↗</span></small>
+        </a>
+      </div>
+    </section>
   </div>
 </BaseLayout>
