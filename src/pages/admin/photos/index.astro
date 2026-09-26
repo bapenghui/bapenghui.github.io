@@ -184,6 +184,103 @@ import '../../../styles/photo-admin.css';
         </div>
       </form>
     </dialog>
+
+    <dialog class="admin-upload-dialog" data-upload-dialog>
+      <form data-upload-form>
+        <header class="admin-dialog-header">
+          <div>
+            <p class="admin-kicker">Local upload / 本地上传</p>
+            <h2>添加一张视觉记录</h2>
+            <p>先在浏览器中预览，再通过安全入库流程保存到图片库。</p>
+          </div>
+          <button class="admin-icon-button" type="button" data-upload-close aria-label="关闭上传窗口">×</button>
+        </header>
+
+        <div class="admin-drop-zone" data-drop-zone>
+          <input
+            data-upload-input
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            hidden
+          />
+          <span class="admin-drop-mark" aria-hidden="true">＋</span>
+          <strong>把图片拖到这里</strong>
+          <small>JPEG、PNG、WebP、AVIF · 单张不超过 10 MiB</small>
+          <button class="admin-secondary-button" type="button" data-upload-choose>选择图片</button>
+        </div>
+
+        <div class="admin-upload-selection" data-upload-selection hidden>
+          <figure>
+            <img data-upload-preview alt="待上传图片预览" />
+            <figcaption>
+              <strong data-upload-filename></strong>
+              <span data-upload-filemeta></span>
+            </figcaption>
+          </figure>
+
+          <div class="admin-form-grid">
+            <label class="admin-field-wide">
+              <span>标题</span>
+              <input name="uploadTitle" required maxlength="120" />
+            </label>
+            <label class="admin-field-wide">
+              <span>图片说明（无障碍文本）</span>
+              <input name="uploadAltText" required maxlength="240" placeholder="描述画面里真正重要的内容" />
+            </label>
+            <label class="admin-field-wide">
+              <span>摘要</span>
+              <textarea name="uploadSummary" rows="2" maxlength="600"></textarea>
+            </label>
+            <label>
+              <span>分类</span>
+              <input name="uploadCategory" required maxlength="40" value="记录" />
+            </label>
+            <label>
+              <span>标签（逗号分隔）</span>
+              <input name="uploadTags" maxlength="371" />
+            </label>
+            <label>
+              <span>画面方向</span>
+              <select name="uploadOrientation">
+                <option value="landscape">横向</option>
+                <option value="portrait">纵向</option>
+                <option value="square">方形</option>
+              </select>
+            </label>
+            <label>
+              <span>排序权重</span>
+              <input name="uploadSortOrder" type="number" step="1" value="0" />
+            </label>
+          </div>
+
+          <fieldset class="admin-toggle-grid admin-upload-toggles">
+            <legend>保存选项</legend>
+            <label>
+              <input name="uploadIsPublished" type="checkbox" checked />
+              <span><strong>立即发布</strong><small>关闭后将保存为草稿</small></span>
+            </label>
+            <label>
+              <input name="uploadIsFeatured" type="checkbox" />
+              <span><strong>首页精选</strong><small>加入首页图片预览候选</small></span>
+            </label>
+            <label>
+              <input name="uploadIsReserved" type="checkbox" />
+              <span><strong>永久保留</strong><small>容量满时不会自动覆盖</small></span>
+            </label>
+          </fieldset>
+
+          <p class="admin-upload-capacity" data-upload-capacity></p>
+        </div>
+
+        <div class="admin-upload-actions">
+          <span data-upload-progress role="status" aria-live="polite"></span>
+          <div>
+            <button class="admin-quiet-button" type="button" data-upload-cancel>取消</button>
+            <button class="admin-primary-button" type="submit" data-upload-submit disabled>确认保存</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
   </div>
 
   <script>

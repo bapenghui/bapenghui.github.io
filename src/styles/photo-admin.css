@@ -294,6 +294,107 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   box-shadow: 0 1.5rem 5rem rgb(32 33 38 / 0.22);
 }
 
+.admin-upload-dialog {
+  width: min(calc(100% - 2rem), 62rem);
+  max-height: min(90vh, 52rem);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 1.5rem 5rem rgb(32 33 38 / 0.22);
+}
+
+.admin-upload-dialog::backdrop {
+  background: rgb(18 20 28 / 0.55);
+  backdrop-filter: blur(0.3rem);
+}
+
+.admin-upload-dialog > form { padding: clamp(1.25rem, 3vw, 2.25rem); }
+
+.admin-dialog-header,
+.admin-upload-actions,
+.admin-upload-actions > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-dialog-header { align-items: flex-start; }
+.admin-dialog-header h2 { margin: 0.35rem 0; font-size: clamp(1.65rem, 3vw, 2.35rem); }
+.admin-dialog-header p:last-child { margin: 0; color: var(--color-muted); font-size: 0.82rem; }
+
+.admin-drop-zone {
+  display: grid;
+  min-height: 10rem;
+  place-content: center;
+  justify-items: center;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  border: 1px dashed color-mix(in srgb, var(--color-ink) 26%, var(--color-line));
+  border-radius: var(--radius-md);
+  background: var(--color-canvas);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.admin-drop-zone:hover,
+.admin-drop-zone:focus-within,
+.admin-drop-zone[data-active='true'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  transform: translateY(-0.1rem);
+}
+
+.admin-drop-zone:focus-within { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+.admin-drop-zone strong { font-size: 0.92rem; }
+.admin-drop-zone small { color: var(--color-muted); font-size: 0.7rem; }
+.admin-drop-mark { color: var(--color-accent-strong); font-size: 2rem; line-height: 1; }
+
+.admin-upload-selection {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.7fr) minmax(22rem, 1.3fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.admin-upload-selection figure { margin: 0; }
+.admin-upload-selection figure img {
+  width: 100%;
+  height: 18rem;
+  border-radius: var(--radius-md);
+  background: var(--color-canvas);
+  object-fit: cover;
+}
+
+.admin-upload-selection figcaption { display: grid; gap: 0.2rem; margin-top: 0.65rem; }
+.admin-upload-selection figcaption strong { overflow-wrap: anywhere; font-size: 0.82rem; }
+.admin-upload-selection figcaption span { color: var(--color-muted); font-size: 0.68rem; }
+.admin-upload-selection .admin-form-grid,
+.admin-upload-selection .admin-upload-toggles,
+.admin-upload-selection .admin-upload-capacity { grid-column: 2; }
+.admin-upload-toggles { margin-block: 0; }
+
+.admin-upload-capacity {
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border-left: 0.22rem solid var(--color-yellow);
+  background: var(--color-canvas);
+  color: var(--color-muted);
+  font-size: 0.74rem;
+}
+
+.admin-upload-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.admin-upload-actions > span { color: var(--color-muted); font-size: 0.74rem; }
+
 .admin-delete-dialog::backdrop { background: rgb(18 20 28 / 0.55); backdrop-filter: blur(0.3rem); }
 .admin-delete-dialog form { padding: 2rem; }
 .admin-delete-dialog h2 { margin: 0.35rem 0 0.75rem; font-size: 1.65rem; }
@@ -317,6 +418,12 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   .admin-form-grid,
   .admin-toggle-grid { grid-template-columns: 1fr; }
   .admin-field-wide { grid-column: auto; }
+  .admin-upload-selection { grid-template-columns: 1fr; }
+  .admin-upload-selection .admin-form-grid,
+  .admin-upload-selection .admin-upload-toggles,
+  .admin-upload-selection .admin-upload-capacity { grid-column: 1; }
+  .admin-upload-selection figure img { height: 14rem; }
+  .admin-upload-actions { align-items: flex-start; flex-direction: column; }
 }
 
 @media (max-width: 32rem) {

@@ -8,6 +8,7 @@ import {
 } from '../lib/photos/admin-state';
 import type { PhotoRecord } from '../lib/photos/contracts';
 import { getPhotoSupabaseClient } from '../lib/photos/supabase';
+import { createPhotoUploadController } from './photo-upload';
 
 type StatusTone = 'neutral' | 'success' | 'error' | 'warning';
 
@@ -70,9 +71,11 @@ function createAdminController(
     requiredElement(container, '[data-delete-button]').addEventListener('click', openDeleteDialog);
     deleteConfirm.addEventListener('input', updateDeleteButton);
     deleteForm.addEventListener('submit', (event) => void deletePhoto(event));
-    requiredElement(container, '[data-upload-button]').addEventListener('click', () => {
-      setStatus(status, '本地上传面板正在接入安全入库流程。', 'neutral');
-    });
+    createPhotoUploadController(container, client, {
+      getPhotos: () => photos,
+      onSaved: loadPhotos,
+      setStatus: (message, tone) => setStatus(status, message, tone),
+    }).bind();
     requiredElement(container, '[data-import-button]').addEventListener('click', () => {
       setStatus(status, '网页采集面板正在接入候选预览流程。', 'neutral');
     });
