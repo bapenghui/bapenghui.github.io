@@ -2,10 +2,10 @@
 
 ## Task 1: Shared contracts and validation
 
-- [ ] 固定 Supabase 浏览器客户端版本并提供无秘密的 `.env.example`。
-- [ ] 定义图片、候选、保存和错误契约。
-- [ ] 先写失败测试，再实现文件、元数据和 HTTPS URL 校验。
-- [ ] Verify: `pnpm test -- src/lib/photos/validation.test.ts && pnpm test && pnpm build`
+- [x] 固定 Supabase 浏览器客户端版本并提供无秘密的 `.env.example`。
+- [x] 定义图片、候选、保存和错误契约。
+- [x] 先写失败测试，再实现文件、元数据和 HTTPS URL 校验。
+- [x] Verify: `pnpm test -- src/lib/photos/validation.test.ts && pnpm test && pnpm build`
 - Dependencies: none
 - Files: `package.json`, `pnpm-lock.yaml`, `.env.example`, `src/lib/photos/contracts.ts`, `src/lib/photos/validation.test.ts`
 
