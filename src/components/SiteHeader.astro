@@ -12,11 +12,14 @@ const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.s
 <header class="site-header">
   <div class="nav-shell">
     <a class="wordmark" href="/" aria-label={`${SITE.name} 首页`}>
-      <span class="wordmark-dot" aria-hidden="true"></span>
-      {SITE.name}
+      <span class="wordmark-mark" aria-hidden="true">BP</span>
+      <span class="wordmark-copy">
+        <strong>{SITE.name}</strong>
+        <small>Personal workspace</small>
+      </span>
     </a>
     <nav aria-label="主导航">
-      <p class="nav-label">Navigation</p>
+      <p class="nav-label">Workspace</p>
       <ul class="nav-list">
         {NAV_ITEMS.map((item, index) => (
           <li>

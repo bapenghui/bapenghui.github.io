@@ -1,37 +1,42 @@
 :root {
   color-scheme: light;
-  --color-canvas: #f4f0e8;
-  --color-surface: #fbf8f1;
-  --color-ink: #202621;
-  --color-muted: #687068;
-  --color-line: #d6d0c4;
-  --color-grid: rgb(32 38 33 / 0.025);
-  --color-accent: #d34a2f;
-  --color-accent-strong: #a83120;
-  --color-accent-soft: #f3c7b8;
-  --color-sage: #758c78;
-  --color-blue: #497887;
+  --color-canvas: #f5f4f7;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #faf9fb;
+  --color-ink: #27242c;
+  --color-muted: #817d88;
+  --color-line: #e8e5ec;
+  --color-grid: rgb(61 52 71 / 0.025);
+  --color-accent: #796487;
+  --color-accent-strong: #554361;
+  --color-accent-soft: #eee9f2;
+  --color-sage: #708578;
+  --color-blue: #607c8a;
   --shell: 74rem;
   --reading: 44rem;
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: "Noto Serif SC", "Songti SC", STSong, Georgia, serif;
-  --radius-sm: 0.35rem;
+  --font-serif: var(--font-sans);
+  --radius-sm: 0.45rem;
   --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-card: 0 0.1rem 0.35rem rgb(38 31 45 / 0.035), 0 0.8rem 2rem rgb(38 31 45 / 0.025);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --color-canvas: #181c19;
-    --color-surface: #202521;
-    --color-ink: #eee9df;
-    --color-muted: #a6ada6;
-    --color-line: #3a403b;
-    --color-grid: rgb(238 233 223 / 0.025);
-    --color-accent: #ef7458;
-    --color-accent-strong: #ff9a80;
-    --color-accent-soft: #64372d;
-    --color-sage: #91aa94;
-    --color-blue: #70a6b4;
+    --color-canvas: #1c1a20;
+    --color-surface: #252229;
+    --color-surface-subtle: #211e25;
+    --color-ink: #f1edf3;
+    --color-muted: #aaa4af;
+    --color-line: #3b3640;
+    --color-grid: rgb(241 237 243 / 0.02);
+    --color-accent: #ab90ba;
+    --color-accent-strong: #c5acd2;
+    --color-accent-soft: #3c3242;
+    --color-sage: #91a597;
+    --color-blue: #83a2af;
+    --shadow-card: 0 0.1rem 0.35rem rgb(0 0 0 / 0.12), 0 0.8rem 2rem rgb(0 0 0 / 0.08);
   }
 }
