@@ -18,7 +18,7 @@ const photos = sortByUpdatedDesc(
 <BaseLayout pageClass="overview-page">
   <div class="workspace-home shell">
     <div class="workspace-topbar">
-      <p><span aria-hidden="true"></span> 个人站 · 内容工作台</p>
+      <p><span aria-hidden="true"></span> 正在建设中的个人数字花园</p>
       <a class="workspace-status" href="/now/">
         <span aria-hidden="true"></span>
         <strong>现在</strong>
@@ -29,9 +29,14 @@ const photos = sortByUpdatedDesc(
     </div>
 
     <header class="workspace-welcome">
-      <p class="workspace-kicker">Today</p>
-      <h1>今天，从这里开始。</h1>
+      <p class="workspace-kicker">Hello / 你好</p>
+      <h1>今天，<em>从这里</em>开始。</h1>
       <p>项目持续推进，想法持续记录，也留下沿途看见的画面。</p>
+      <div class="workspace-welcome-note" aria-label="关注方向">
+        <span>Robotics</span>
+        <span>Agent</span>
+        <span>Visual</span>
+      </div>
     </header>
 
     <section class="workspace-section workspace-focus" aria-labelledby="focus-heading">
@@ -50,10 +55,10 @@ const photos = sortByUpdatedDesc(
             <span>{projects.length}</span>
           </header>
           <ul class="dashboard-project-list">
-            {projects.map(({ data, id }) => (
+            {projects.map(({ data, id }, index) => (
               <li>
                 <a class="dashboard-project-row" href={`/projects/${id}/`} data-accent={data.accent}>
-                  <span class="dashboard-check" aria-hidden="true">✓</span>
+                  <span class="dashboard-check" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                   <span class="dashboard-row-copy">
                     <strong>{data.title}</strong>
                     <small>{data.summary}</small>
@@ -81,6 +86,7 @@ const photos = sortByUpdatedDesc(
                   <span>{data.category} · {data.readingMinutes} 分钟</span>
                   <strong>{data.title}</strong>
                   <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+                  <span class="dashboard-writing-arrow" aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}
@@ -109,12 +115,12 @@ const photos = sortByUpdatedDesc(
       </header>
 
       <div class="workspace-glance-grid">
-        <a class="glance-card" href="/projects/">
+        <a class="glance-card glance-projects" href="/projects/">
           <span>公开项目</span>
           <strong>{projects.length}</strong>
           <small>持续整理工程过程</small>
         </a>
-        <a class="glance-card" href="/writing/">
+        <a class="glance-card glance-notes" href="/writing/">
           <span>近期写作</span>
           <strong>{writing.length}</strong>
           <small>技术笔记与长期思考</small>

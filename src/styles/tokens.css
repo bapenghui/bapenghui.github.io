@@ -1,25 +1,27 @@
 :root {
   color-scheme: light;
-  --color-canvas: #f5f4f7;
-  --color-surface: #ffffff;
-  --color-surface-subtle: #faf9fb;
-  --color-ink: #27242c;
-  --color-muted: #817d88;
-  --color-line: #e8e5ec;
-  --color-grid: rgb(61 52 71 / 0.025);
-  --color-accent: #796487;
-  --color-accent-strong: #554361;
-  --color-accent-soft: #eee9f2;
-  --color-sage: #708578;
-  --color-blue: #607c8a;
+  --color-canvas: #f4f1e9;
+  --color-surface: #fffdf8;
+  --color-surface-subtle: #ebe8df;
+  --color-ink: #202126;
+  --color-muted: #71716e;
+  --color-line: #ddd9cf;
+  --color-grid: rgb(32 33 38 / 0.035);
+  --color-accent: #e75d3c;
+  --color-accent-strong: #b43f27;
+  --color-accent-soft: #ffe1d7;
+  --color-sage: #347c69;
+  --color-blue: #405c9f;
+  --color-yellow: #f4c95d;
+  --color-navy: #252b46;
   --shell: 74rem;
   --reading: 44rem;
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: var(--font-sans);
-  --radius-sm: 0.45rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --shadow-card: 0 0.1rem 0.35rem rgb(38 31 45 / 0.035), 0 0.8rem 2rem rgb(38 31 45 / 0.025);
+  --radius-sm: 0.55rem;
+  --radius-md: 0.95rem;
+  --radius-lg: 1.25rem;
+  --shadow-card: 0 0.2rem 0.5rem rgb(46 39 29 / 0.04), 0 1rem 2.5rem rgb(46 39 29 / 0.045);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +39,8 @@
     --color-accent-soft: #3c3242;
     --color-sage: #91a597;
     --color-blue: #83a2af;
+    --color-yellow: #d8b45c;
+    --color-navy: #171b2d;
     --shadow-card: 0 0.1rem 0.35rem rgb(0 0 0 / 0.12), 0 0.8rem 2rem rgb(0 0 0 / 0.08);
   }
 }

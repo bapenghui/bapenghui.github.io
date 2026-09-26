@@ -7,6 +7,7 @@ interface Props {
 
 const { pathname } = Astro.props;
 const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
+const navMarks = ['✦', '↗', '¶', '▦', '●'];
 ---
 
 <header class="site-header">
@@ -15,7 +16,7 @@ const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.s
       <span class="wordmark-mark" aria-hidden="true">BP</span>
       <span class="wordmark-copy">
         <strong>{SITE.name}</strong>
-        <small>Personal workspace</small>
+        <small>Digital garden</small>
       </span>
     </a>
     <nav aria-label="主导航">
@@ -24,13 +25,13 @@ const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.s
         {NAV_ITEMS.map((item, index) => (
           <li>
             <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              <span class="nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span class="nav-index" aria-hidden="true">{navMarks[index]}</span>
               <span>{item.label}</span>
             </a>
           </li>
         ))}
       </ul>
     </nav>
-    <p class="rail-caption">个人数字空间<br />持续记录与生长</p>
+    <p class="rail-caption"><span aria-hidden="true"></span> Open to curiosity<br />持续记录与生长</p>
   </div>
 </header>
