@@ -28,16 +28,24 @@ const photos = sortByUpdatedDesc(
       <a class="workspace-source" href="https://github.com/bapenghui/bapenghui.github.io">查看源码 ↗</a>
     </div>
 
-    <header class="workspace-welcome">
-      <p class="workspace-kicker">Hello / 你好</p>
-      <h1>今天，<em>从这里</em>开始。</h1>
-      <p>项目持续推进，想法持续记录，也留下沿途看见的画面。</p>
-      <div class="workspace-welcome-note" aria-label="关注方向">
-        <span>Robotics</span>
-        <span>Agent</span>
-        <span>Visual</span>
-      </div>
-    </header>
+    <section class="workspace-welcome" aria-labelledby="welcome-heading">
+      <header class="workspace-welcome-copy">
+        <p class="workspace-kicker">Hello / 你好</p>
+        <h1 id="welcome-heading">今天，<em>从这里</em>开始。</h1>
+        <p>项目持续推进，想法持续记录，也留下沿途看见的画面。</p>
+      </header>
+
+      <article class="workspace-welcome-note dashboard-card dashboard-now">
+        <header class="dashboard-card-heading">
+          <h2>现在</h2>
+          <span class="dashboard-live"><span aria-hidden="true"></span> 进行中</span>
+        </header>
+        <a class="dashboard-now-link" href="/now/">
+          <strong>构建个人数字空间，研究机器人 Agent 与边缘视觉。</strong>
+          <span>查看当前关注与下一步 <span aria-hidden="true">↗</span></span>
+        </a>
+      </article>
+    </section>
 
     <section class="workspace-section workspace-focus" aria-labelledby="focus-heading">
       <header class="workspace-section-heading">
@@ -93,16 +101,6 @@ const photos = sortByUpdatedDesc(
           </ul>
         </article>
 
-        <article class="dashboard-card dashboard-now">
-          <header class="dashboard-card-heading">
-            <h3>现在</h3>
-            <span class="dashboard-live"><span aria-hidden="true"></span> 进行中</span>
-          </header>
-          <a class="dashboard-now-link" href="/now/">
-            <strong>构建个人数字空间，研究机器人 Agent 与边缘视觉。</strong>
-            <span>查看当前关注与下一步 <span aria-hidden="true">↗</span></span>
-          </a>
-        </article>
       </div>
     </section>
 

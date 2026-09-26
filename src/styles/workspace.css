@@ -7,10 +7,10 @@
 .workspace-home::before {
   position: absolute;
   z-index: -1;
-  top: -7rem;
-  right: 4%;
-  width: 18rem;
-  height: 18rem;
+  top: -4rem;
+  right: 22%;
+  width: 8rem;
+  height: 8rem;
   border: 1px solid color-mix(in srgb, var(--color-accent) 14%, transparent);
   border-radius: 50%;
   background: color-mix(in srgb, var(--color-accent-soft) 55%, transparent);
@@ -78,7 +78,14 @@
 }
 
 .workspace-welcome {
-  position: relative;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.5fr) minmax(17rem, 0.72fr);
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.workspace-welcome-copy {
   align-self: center;
 }
 
@@ -92,8 +99,8 @@
 }
 
 .workspace-welcome h1 {
-  margin-bottom: 0.45rem;
-  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  margin-bottom: 0.5rem;
+  font-size: clamp(2.8rem, 4.5vw, 3.8rem);
   line-height: 1;
   letter-spacing: -0.065em;
 }
@@ -117,36 +124,15 @@
   transform: rotate(-2deg);
 }
 
-.workspace-welcome > p:last-of-type {
+.workspace-welcome-copy > p:last-of-type {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 }
 
 .workspace-welcome-note {
-  position: absolute;
-  right: 0;
-  bottom: 0.15rem;
-  display: flex;
-  gap: 0.35rem;
-  transform: rotate(-1.5deg);
-}
-
-.workspace-welcome-note span {
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-surface) 84%, transparent);
-  color: var(--color-muted);
-  font: 650 0.56rem/1 var(--font-sans);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.workspace-welcome-note span:nth-child(2) {
-  background: var(--color-yellow);
-  color: var(--color-ink);
-  transform: translateY(-0.25rem);
+  min-height: 7.5rem;
+  padding: 1rem 1.15rem;
 }
 
 .workspace-section {
@@ -162,21 +148,21 @@
 
 .workspace-section-heading h2 {
   margin-bottom: 0.15rem;
-  font-size: 1rem;
+  font-size: 1.12rem;
   letter-spacing: -0.02em;
 }
 
 .workspace-section-heading p {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.64rem;
+  font-size: 0.72rem;
 }
 
 .workspace-section-heading > a {
   padding: 0.35rem 0;
   border-bottom: 1px solid var(--color-ink);
   color: var(--color-ink);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 650;
   text-decoration: none;
 }
@@ -212,16 +198,17 @@
   min-height: 1.5rem;
 }
 
+.dashboard-card-heading h2,
 .dashboard-card-heading h3 {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.98rem;
   letter-spacing: -0.01em;
 }
 
 .dashboard-card-heading > span,
 .dashboard-card-heading > a {
   color: var(--color-muted);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   text-decoration: none;
 }
 
@@ -312,7 +299,7 @@
 }
 
 .dashboard-row-copy strong {
-  font-size: clamp(0.78rem, 1.1vw, 0.94rem);
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
   line-height: 1.35;
 }
 
@@ -320,7 +307,7 @@
   margin-top: 0.2rem;
   overflow: hidden;
   color: var(--color-muted);
-  font-size: clamp(0.59rem, 0.75vw, 0.67rem);
+  font-size: clamp(0.75rem, 0.82vw, 0.82rem);
   line-height: 1.4;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -328,7 +315,7 @@
 
 .dashboard-row-meta {
   color: var(--color-muted);
-  font-size: 0.56rem;
+  font-size: 0.7rem;
   text-align: right;
 }
 
@@ -338,7 +325,7 @@
 
 .dashboard-arrow {
   color: var(--color-accent);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
 }
 
 .dashboard-writing {
@@ -393,12 +380,12 @@
 
 .dashboard-writing-list span,
 .dashboard-writing-list time {
-  font-size: 0.56rem;
+  font-size: 0.65rem;
 }
 
 .dashboard-writing-list strong {
   margin-block: 0.2rem;
-  font-size: clamp(0.73rem, 1vw, 0.88rem);
+  font-size: clamp(0.88rem, 1vw, 1rem);
   line-height: 1.35;
 }
 
@@ -455,14 +442,14 @@
 }
 
 .dashboard-now-link strong {
-  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
   line-height: 1.5;
 }
 
 .dashboard-now-link > span {
   margin-top: 0.55rem;
   color: var(--color-accent-strong);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
 }
 
 .workspace-glance-grid {
@@ -473,7 +460,7 @@
 
 .glance-card {
   display: flex;
-  min-height: 7rem;
+  min-height: 6rem;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem 1.15rem;
@@ -491,7 +478,7 @@
 .glance-card > span:first-child,
 .glance-card small {
   color: var(--color-muted);
-  font-size: 0.59rem;
+  font-size: 0.68rem;
 }
 
 .glance-card > strong {
@@ -651,8 +638,8 @@ body:not(.overview-page) .now-grid > section {
   .workspace-home {
     display: grid;
     height: 100svh;
-    grid-template-rows: auto auto minmax(19rem, 1fr) auto;
-    gap: clamp(0.7rem, 1.4vh, 0.95rem);
+    grid-template-rows: auto auto minmax(14rem, 1fr) auto;
+    gap: clamp(0.6rem, 1.2vh, 0.8rem);
     padding-block: clamp(1rem, 2vh, 1.35rem);
   }
 
@@ -667,21 +654,28 @@ body:not(.overview-page) .now-grid > section {
   .workspace-board {
     min-height: 0;
     grid-template-columns: minmax(0, 1.65fr) minmax(13.5rem, 0.95fr);
-    grid-template-rows: minmax(0, 1.16fr) minmax(0, 0.84fr);
+    grid-template-rows: minmax(0, 1fr);
   }
 
   .dashboard-projects {
-    grid-row: 1 / span 2;
+    grid-row: auto;
   }
 
   .workspace-glance-grid {
+    height: clamp(5.5rem, 16vh, 7rem);
     grid-template-columns: 0.85fr 0.85fr 2fr;
+  }
+
+  .glance-card,
+  .glance-photo-strip,
+  .glance-photo-strip img {
+    min-height: 0;
   }
 }
 
 @media (max-height: 48rem) and (min-width: 56.01rem) {
   .workspace-home {
-    grid-template-rows: auto auto minmax(15rem, 1fr) auto;
+    grid-template-rows: auto auto minmax(12.5rem, 1fr) auto;
     gap: 0.45rem;
     padding-block: 0.6rem;
   }
@@ -692,15 +686,16 @@ body:not(.overview-page) .now-grid > section {
 
   .workspace-welcome h1 {
     margin-bottom: 0.25rem;
-    font-size: clamp(2.5rem, 4.5vw, 3.25rem);
+    font-size: clamp(2.6rem, 4.2vw, 3.35rem);
   }
 
-  .workspace-welcome > p:last-of-type {
-    font-size: 0.72rem;
+  .workspace-welcome-copy > p:last-of-type {
+    font-size: 0.78rem;
   }
 
   .workspace-welcome-note {
-    display: none;
+    min-height: 6.25rem;
+    padding-block: 0.75rem;
   }
 
   .workspace-focus,
@@ -710,11 +705,11 @@ body:not(.overview-page) .now-grid > section {
 
   .workspace-section-heading h2 {
     margin-bottom: 0;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .workspace-section-heading p {
-    font-size: 0.58rem;
+    font-size: 0.72rem;
   }
 
   .workspace-board,
@@ -733,12 +728,12 @@ body:not(.overview-page) .now-grid > section {
 
   .dashboard-writing-list span:not(.dashboard-writing-arrow),
   .dashboard-writing-list time {
-    display: none;
+    font-size: 0.7rem;
   }
 
   .dashboard-writing-list strong {
     margin: 0;
-    font-size: 0.76rem;
+    font-size: 0.92rem;
   }
 
   .dashboard-now-link {
@@ -748,16 +743,12 @@ body:not(.overview-page) .now-grid > section {
   }
 
   .dashboard-now-link strong {
-    font-size: 0.76rem;
+    font-size: 0.84rem;
     line-height: 1.35;
   }
 
-  .dashboard-now-link > span {
-    display: none;
-  }
-
   .glance-card {
-    min-height: 5rem;
+    min-height: 4.75rem;
     padding: 0.65rem 0.85rem;
   }
 
@@ -771,10 +762,6 @@ body:not(.overview-page) .now-grid > section {
 }
 
 @media (max-width: 68rem) and (min-width: 56.01rem) {
-  .workspace-welcome-note {
-    display: none;
-  }
-
   .dashboard-row-copy small {
     max-width: 23rem;
   }
@@ -798,9 +785,14 @@ body:not(.overview-page) .now-grid > section {
     margin-top: 2.5rem;
   }
 
+  .workspace-welcome {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
   .workspace-welcome-note {
-    bottom: auto;
-    top: 0;
+    min-height: 12rem;
+    margin-top: 1rem;
   }
 
   .workspace-board,
@@ -831,8 +823,7 @@ body:not(.overview-page) .now-grid > section {
     grid-template-columns: 1fr;
   }
 
-  .workspace-source,
-  .workspace-welcome-note {
+  .workspace-source {
     display: none;
   }
 
