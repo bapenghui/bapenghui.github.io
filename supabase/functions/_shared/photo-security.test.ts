@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   detectPhotoMimeType,
   normalizeFinalizePhotoInput,
+  normalizeWebFinalizePhotoInput,
   validateIdempotencyKey,
   validateStagingPath,
 } from './photo-security';
@@ -70,5 +71,27 @@ describe('finalize photo security boundary', () => {
       orientation: 'diagonal',
       isPublished: 'yes',
     }, userId)).toMatchObject({ ok: false, error: { code: 'INVALID_FINALIZE_INPUT' } });
+  });
+
+  it('normalizes a web candidate while preserving attribution URLs', () => {
+    expect(normalizeWebFinalizePhotoInput({
+      sourceType: 'web',
+      pageUrl: 'https://example.com/gallery',
+      imageUrl: 'https://cdn.example.com/image.webp',
+      metadata: {
+        title: '网页图片', summary: '', altText: '网页中的图片', category: '灵感', tags: [],
+      },
+      orientation: 'landscape',
+      isPublished: true,
+      isReserved: false,
+      isFeatured: false,
+      sortOrder: 0,
+    })).toMatchObject({
+      ok: true,
+      value: {
+        pageUrl: 'https://example.com/gallery',
+        imageUrl: 'https://cdn.example.com/image.webp',
+      },
+    });
   });
 });

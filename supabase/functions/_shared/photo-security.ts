@@ -22,8 +22,24 @@ export interface FinalizePhotoInput {
   sortOrder: number;
 }
 
+export interface WebFinalizePhotoInput {
+  sourceType: 'web';
+  pageUrl: string;
+  imageUrl: string;
+  metadata: FinalizeMetadata;
+  orientation: 'landscape' | 'portrait' | 'square';
+  isPublished: boolean;
+  isReserved: boolean;
+  isFeatured: boolean;
+  sortOrder: number;
+}
+
 type FinalizeInputResult =
   | { ok: true; value: FinalizePhotoInput }
+  | { ok: false; error: { code: 'INVALID_FINALIZE_INPUT'; message: string } };
+
+type WebFinalizeInputResult =
+  | { ok: true; value: WebFinalizePhotoInput }
   | { ok: false; error: { code: 'INVALID_FINALIZE_INPUT'; message: string } };
 
 export function validateIdempotencyKey(value: string | null): value is string {
@@ -102,6 +118,61 @@ export function normalizeFinalizePhotoInput(
   };
 }
 
+export function normalizeWebFinalizePhotoInput(input: unknown): WebFinalizeInputResult {
+  if (!isRecord(input) || input.sourceType !== 'web' || !isRecord(input.metadata)) {
+    return invalidInput();
+  }
+  const pageUrl = normalizePublicHttpsUrl(stringValue(input.pageUrl));
+  const imageUrl = normalizePublicHttpsUrl(stringValue(input.imageUrl));
+  const orientation = stringValue(input.orientation);
+  const sortOrder = input.sortOrder;
+  const rawTags = input.metadata.tags;
+  if (!pageUrl.ok || !imageUrl.ok
+    || !allowedOrientations.has(orientation)
+    || typeof input.isPublished !== 'boolean'
+    || typeof input.isReserved !== 'boolean'
+    || typeof input.isFeatured !== 'boolean'
+    || typeof sortOrder !== 'number'
+    || !Number.isSafeInteger(sortOrder)
+    || sortOrder < -2_147_483_648
+    || sortOrder > 2_147_483_647
+    || !Array.isArray(rawTags)
+    || !rawTags.every((tag) => typeof tag === 'string')) return invalidInput();
+
+  const metadata: FinalizeMetadata = {
+    title: stringValue(input.metadata.title).trim(),
+    summary: stringValue(input.metadata.summary).trim(),
+    altText: stringValue(input.metadata.altText).trim(),
+    category: stringValue(input.metadata.category).trim(),
+    tags: [...new Set(rawTags.map((tag) => tag.trim()).filter(Boolean))],
+  };
+  const validMetadata = metadata.title.length > 0
+    && metadata.title.length <= 120
+    && metadata.summary.length <= 600
+    && metadata.altText.length > 0
+    && metadata.altText.length <= 240
+    && metadata.category.length > 0
+    && metadata.category.length <= 40
+    && metadata.tags.length <= 12
+    && metadata.tags.every((tag) => tag.length <= 30);
+  if (!validMetadata) return invalidInput();
+
+  return {
+    ok: true,
+    value: {
+      sourceType: 'web',
+      pageUrl: pageUrl.value,
+      imageUrl: imageUrl.value,
+      metadata,
+      orientation: orientation as WebFinalizePhotoInput['orientation'],
+      isPublished: input.isPublished,
+      isReserved: input.isReserved,
+      isFeatured: input.isFeatured,
+      sortOrder,
+    },
+  };
+}
+
 export function detectPhotoMimeType(bytes: Uint8Array): string | null {
   if (startsWith(bytes, [0xff, 0xd8, 0xff])) return 'image/jpeg';
   if (startsWith(bytes, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) {
@@ -125,7 +196,7 @@ export function extensionForMimeType(mimeType: string): string {
   throw new Error('UNSUPPORTED_FILE_TYPE');
 }
 
-function invalidInput(): FinalizeInputResult {
+function invalidInput(): { ok: false; error: { code: 'INVALID_FINALIZE_INPUT'; message: string } } {
   return {
     ok: false,
     error: {
@@ -150,3 +221,4 @@ function startsWith(bytes: Uint8Array, signature: number[]): boolean {
 function ascii(bytes: Uint8Array, start: number, end: number): string {
   return String.fromCharCode(...bytes.slice(start, end));
 }
+import { normalizePublicHttpsUrl } from './web-extraction.ts';

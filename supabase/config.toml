@@ -119,6 +119,9 @@ file_size_limit = "10MiB"
 [functions.finalize-photo]
 verify_jwt = true
 
+[functions.extract-photo-candidates]
+verify_jwt = true
+
 # Uncomment to configure local storage buckets
 # [storage.buckets.images]
 # public = false
