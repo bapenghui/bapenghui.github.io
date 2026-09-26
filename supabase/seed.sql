@@ -1,0 +1,1 @@
+-- Seed data is added after the remote photo store is linked and verified.
