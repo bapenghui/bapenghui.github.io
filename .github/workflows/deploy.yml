@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_SUPABASE_URL: https://hkjqykankquyajpxqzls.supabase.co
+      PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ptve06vpl53p1AaNXvsGdQ_HnISUg2H
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

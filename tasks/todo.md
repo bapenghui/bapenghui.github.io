@@ -11,22 +11,22 @@
 
 ## Task 2: Database, RLS and retention
 
-- [ ] 建立 `photo_admins`、`photos`、Storage bucket 与最小权限策略。
-- [ ] 实现原子的 `insert_photo_with_retention`，严格限制 100 张且不覆盖保留图片。
-- [ ] 测试匿名/管理员权限、99/100/101、全部保留和并发写入。
-- [ ] Verify: pinned Supabase database tests; `pnpm test && pnpm build`
+- [x] 建立 `photo_admins`、`photos`、Storage bucket 与最小权限策略。
+- [x] 实现原子的 `insert_photo_with_retention`，严格限制 100 张且不覆盖保留图片。
+- [ ] 已覆盖匿名/管理员权限、99/100/101 与全部保留；并发写入测试待补。
+- [x] Verify: remote pgTAP 21/21 + 8/8; `pnpm test && pnpm build`
 - Dependencies: Task 1
 - Files: `supabase/config.toml`, one migration, two SQL test files
 
 ## Checkpoint A: Storage foundation
 
-- [ ] Tasks 1–2 分别提交且构建通过。
-- [ ] 权限和容量规则有自动化证据。
-- [ ] 仓库中没有秘密。
+- [ ] Tasks 1–2 已分别提交且构建通过；并发测试待补后关闭检查点。
+- [ ] 权限和容量规则已有自动化证据；并发串行化证据待补。
+- [x] 仓库中没有秘密。
 
 ## Task 3: Link development Supabase project
 
-- [ ] 创建/选择项目、连接 CLI、应用迁移并建立唯一管理员。
+- [ ] 已创建免费项目并应用迁移；等待建立唯一管理员后完成连接。
 - [ ] 验证匿名可读已发布内容、匿名不可写、管理员可写。
 - [ ] 公共配置与服务端秘密分离。
 - [ ] Verify: remote smoke checks and clean secret scan
