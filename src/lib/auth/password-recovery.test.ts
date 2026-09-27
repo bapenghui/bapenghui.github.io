@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildPasswordRecoveryRedirect,
+  parsePasswordRecoveryLink,
   validateNewPassword,
 } from './password-recovery';
 
@@ -24,5 +25,27 @@ describe('password recovery', () => {
       valid: true,
       message: '',
     });
+  });
+
+  it('classifies expired links as errors instead of leaving the page pending', () => {
+    expect(parsePasswordRecoveryLink(
+      'https://bapenghui.github.io/admin/reset-password/#error=access_denied&error_code=otp_expired',
+    )).toEqual({ kind: 'error' });
+  });
+
+  it('extracts implicit recovery tokens for a manual session fallback', () => {
+    expect(parsePasswordRecoveryLink(
+      'https://bapenghui.github.io/admin/reset-password/#access_token=access-example&refresh_token=refresh-example&type=recovery',
+    )).toEqual({
+      kind: 'implicit',
+      accessToken: 'access-example',
+      refreshToken: 'refresh-example',
+    });
+  });
+
+  it('extracts a PKCE code for a manual exchange fallback', () => {
+    expect(parsePasswordRecoveryLink(
+      'https://bapenghui.github.io/admin/reset-password/?code=code-example',
+    )).toEqual({ kind: 'pkce', code: 'code-example' });
   });
 });

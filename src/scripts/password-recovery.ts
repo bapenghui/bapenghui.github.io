@@ -1,5 +1,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { validateNewPassword } from '../lib/auth/password-recovery';
+import {
+  parsePasswordRecoveryLink,
+  validateNewPassword,
+} from '../lib/auth/password-recovery';
 import { getPasswordRecoverySupabaseClient } from '../lib/photos/supabase';
 
 const root = document.querySelector<HTMLElement>('[data-password-recovery]');
@@ -10,6 +13,13 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
   const form = requiredElement<HTMLFormElement>(container, '[data-recovery-form]');
   const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input'));
   const submit = requiredElement<HTMLButtonElement>(form, 'button[type="submit"]');
+  const recoveryLink = parsePasswordRecoveryLink(window.location.href);
+
+  if (recoveryLink.kind === 'error') {
+    scrubRecoveryUrl();
+    setStatus(status, '重置链接无效或已经过期，请返回登录页重新发送。', 'error');
+    return;
+  }
 
   let client: SupabaseClient;
   try {
@@ -19,10 +29,13 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
     return;
   }
 
+  let unlocked = false;
   const unlockForm = (): void => {
+    if (unlocked) return;
+    unlocked = true;
     fields.forEach((field) => { field.disabled = false; });
     submit.disabled = false;
-    window.history.replaceState({}, document.title, window.location.pathname);
+    scrubRecoveryUrl();
     setStatus(status, '链接验证成功，请设置新密码。', 'success');
     fields[0]?.focus();
   };
@@ -34,7 +47,30 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
   const { data, error } = await client.auth.getSession();
   if (data.session) {
     unlockForm();
-  } else if (error || (!window.location.hash && !window.location.search)) {
+    return;
+  }
+
+  if (!error && recoveryLink.kind === 'implicit') {
+    const result = await client.auth.setSession({
+      access_token: recoveryLink.accessToken,
+      refresh_token: recoveryLink.refreshToken,
+    });
+    if (result.data.session) {
+      unlockForm();
+      return;
+    }
+  }
+
+  if (!error && recoveryLink.kind === 'pkce') {
+    const result = await client.auth.exchangeCodeForSession(recoveryLink.code);
+    if (result.data.session) {
+      unlockForm();
+      return;
+    }
+  }
+
+  if (!unlocked) {
+    scrubRecoveryUrl();
     setStatus(status, '重置链接无效或已经过期，请返回登录页重新发送。', 'error');
   }
 
@@ -64,6 +100,10 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
     await client.auth.signOut();
     setStatus(status, '密码已更新。现在可以返回图片工作台登录。', 'success');
   });
+}
+
+function scrubRecoveryUrl(): void {
+  window.history.replaceState({}, document.title, window.location.pathname);
 }
 
 function requiredElement<T extends Element>(root: ParentNode, selector: string): T {
