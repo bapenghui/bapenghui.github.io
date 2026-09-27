@@ -3,13 +3,22 @@ interface Props {
   eyebrow: string;
   title: string;
   description: string;
+  actionHref?: string;
+  actionLabel?: string;
 }
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, actionHref, actionLabel } = Astro.props;
 ---
 
 <header class="page-intro shell">
   <p class="eyebrow">{eyebrow}</p>
   <h1>{title}</h1>
   <p class="page-intro-description">{description}</p>
+  {actionHref && actionLabel && (
+    <a class="page-intro-action" href={actionHref}>
+      <span aria-hidden="true">●</span>
+      {actionLabel}
+      <span aria-hidden="true">↗</span>
+    </a>
+  )}
 </header>
