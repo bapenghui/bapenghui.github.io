@@ -9,6 +9,6 @@ export const NAV_ITEMS = [
   { href: '/', label: '总览' },
   { href: '/projects/', label: '项目' },
   { href: '/writing/', label: '写作' },
-  { href: '/photos/', label: '图片' },
+  { href: '/admin/photos/', label: '图片' },
   { href: '/now/', label: '现在' },
 ] as const;
