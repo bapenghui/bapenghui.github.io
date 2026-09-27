@@ -11,6 +11,7 @@ interface PublicEnvironment {
 }
 
 let browserClient: SupabaseClient | undefined;
+let recoveryClient: SupabaseClient | undefined;
 
 export function readPublicSupabaseConfig(
   environment: PublicEnvironment,
@@ -55,10 +56,30 @@ export function createPhotoSupabaseClient(
   });
 }
 
+export function createPasswordRecoverySupabaseClient(
+  config: PublicSupabaseConfig,
+): SupabaseClient {
+  return createClient(config.url, config.publishableKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: true,
+    },
+  });
+}
+
 export function getPhotoSupabaseClient(): SupabaseClient {
   browserClient ??= createPhotoSupabaseClient(readPublicSupabaseConfig({
     PUBLIC_SUPABASE_URL: import.meta.env.PUBLIC_SUPABASE_URL,
     PUBLIC_SUPABASE_PUBLISHABLE_KEY: import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
   }));
   return browserClient;
+}
+
+export function getPasswordRecoverySupabaseClient(): SupabaseClient {
+  recoveryClient ??= createPasswordRecoverySupabaseClient(readPublicSupabaseConfig({
+    PUBLIC_SUPABASE_URL: import.meta.env.PUBLIC_SUPABASE_URL,
+    PUBLIC_SUPABASE_PUBLISHABLE_KEY: import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  }));
+  return recoveryClient;
 }

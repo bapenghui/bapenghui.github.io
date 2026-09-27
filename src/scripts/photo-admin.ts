@@ -8,6 +8,7 @@ import {
 } from '../lib/photos/admin-state';
 import type { PhotoRecord } from '../lib/photos/contracts';
 import { getPhotoSupabaseClient } from '../lib/photos/supabase';
+import { buildPasswordRecoveryRedirect } from '../lib/auth/password-recovery';
 import { createPhotoUploadController } from './photo-upload';
 import { createPhotoImportController } from './photo-import';
 
@@ -66,6 +67,8 @@ function createAdminController(
 
   function bind(): void {
     loginForm.addEventListener('submit', (event) => void login(event));
+    requiredElement<HTMLButtonElement>(container, '[data-reset-password]')
+      .addEventListener('click', (event) => void requestPasswordReset(event));
     editorForm.addEventListener('submit', (event) => void savePhoto(event));
     requiredElement(container, '[data-sign-out]').addEventListener('click', () => void signOut());
     requiredElement(container, '[data-refresh]').addEventListener('click', () => void loadPhotos());
@@ -82,6 +85,32 @@ function createAdminController(
       onSaved: loadPhotos,
       setStatus: (message, tone) => setStatus(status, message, tone),
     }).bind();
+  }
+
+  async function requestPasswordReset(event: Event): Promise<void> {
+    const button = event.currentTarget as HTMLButtonElement;
+    const emailInput = requiredElement<HTMLInputElement>(loginForm, 'input[name="email"]');
+    const email = emailInput.value.trim();
+
+    if (!email || !emailInput.validity.valid) {
+      emailInput.focus();
+      setStatus(status, '请先填写有效的管理员邮箱。', 'warning');
+      return;
+    }
+
+    button.disabled = true;
+    setStatus(status, '正在发送密码重置邮件…', 'neutral');
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: buildPasswordRecoveryRedirect(window.location.origin),
+    });
+    button.disabled = false;
+
+    if (error) {
+      setStatus(status, '重置邮件发送失败，请稍后重试。', 'error');
+      return;
+    }
+
+    setStatus(status, '如果该邮箱已注册，密码重置邮件已经发送，请检查收件箱。', 'success');
   }
 
   function showLogin(): void {

@@ -134,6 +134,23 @@
   font: inherit;
 }
 
+.admin-login-help {
+  justify-self: center;
+  border: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 0.74);
+  font: 650 0.76rem/1.4 var(--font-sans);
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  cursor: pointer;
+}
+
+.admin-login-help:hover,
+.admin-login-help:focus-visible { color: #fff; }
+
+.admin-recovery-card { margin-top: 2rem; }
+
 .admin-primary-button,
 .admin-secondary-button,
 .admin-quiet-button,

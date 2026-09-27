@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import '../../../styles/photo-admin.css';
+---
+
+<BaseLayout
+  title="设置新密码"
+  description="为个人站图片工作台设置新的管理员密码。"
+  pageClass="photo-admin-page"
+>
+  <div class="photo-admin shell" data-password-recovery>
+    <header class="admin-masthead">
+      <div>
+        <p class="admin-eyebrow">Account recovery / 账号恢复</p>
+        <h1>设置新密码</h1>
+        <p>重置链接只在短时间内有效。新密码只会发送给 Supabase Auth，不会写入本站代码。</p>
+      </div>
+      <a class="admin-back-link" href="/admin/photos/">返回登录 <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <div class="admin-notice" data-recovery-status role="status" aria-live="polite">
+      正在验证密码重置链接…
+    </div>
+
+    <section class="admin-login-card admin-recovery-card">
+      <div class="admin-login-copy">
+        <span class="admin-kicker">Secure update</span>
+        <h2>创建一个新密码</h2>
+        <p>建议使用密码管理器生成至少 12 个字符的唯一密码，不要与其他账号共用。</p>
+      </div>
+      <form class="admin-login-form" data-recovery-form>
+        <label>
+          <span>新密码</span>
+          <input name="password" type="password" autocomplete="new-password" required minlength="12" disabled />
+        </label>
+        <label>
+          <span>再次输入新密码</span>
+          <input name="confirmation" type="password" autocomplete="new-password" required minlength="12" disabled />
+        </label>
+        <button class="admin-primary-button" type="submit" disabled>保存新密码</button>
+        <a class="admin-login-help" href="/admin/photos/">返回管理员登录</a>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    import '../../../scripts/password-recovery';
+  </script>
+</BaseLayout>
