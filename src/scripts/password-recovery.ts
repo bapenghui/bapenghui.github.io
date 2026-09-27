@@ -40,6 +40,33 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
     fields[0]?.focus();
   };
 
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const password = String(formData.get('password') ?? '');
+    const confirmation = String(formData.get('confirmation') ?? '');
+    const validation = validateNewPassword(password, confirmation);
+
+    if (!validation.valid) {
+      setStatus(status, validation.message, 'warning');
+      return;
+    }
+
+    submit.disabled = true;
+    setStatus(status, '正在保存新密码…', 'neutral');
+    const { error: updateError } = await client.auth.updateUser({ password });
+    fields.forEach((field) => { field.value = ''; });
+
+    if (updateError) {
+      submit.disabled = false;
+      setStatus(status, '新密码保存失败，链接可能已经过期，请重新发送重置邮件。', 'error');
+      return;
+    }
+
+    await client.auth.signOut();
+    setStatus(status, '密码已更新。现在可以返回图片工作台登录。', 'success');
+  });
+
   client.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY' && session) unlockForm();
   });
@@ -73,33 +100,6 @@ async function initializePasswordRecovery(container: HTMLElement): Promise<void>
     scrubRecoveryUrl();
     setStatus(status, '重置链接无效或已经过期，请返回登录页重新发送。', 'error');
   }
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const password = String(formData.get('password') ?? '');
-    const confirmation = String(formData.get('confirmation') ?? '');
-    const validation = validateNewPassword(password, confirmation);
-
-    if (!validation.valid) {
-      setStatus(status, validation.message, 'warning');
-      return;
-    }
-
-    submit.disabled = true;
-    setStatus(status, '正在保存新密码…', 'neutral');
-    const { error: updateError } = await client.auth.updateUser({ password });
-    fields.forEach((field) => { field.value = ''; });
-
-    if (updateError) {
-      submit.disabled = false;
-      setStatus(status, '新密码保存失败，链接可能已经过期，请重新发送重置邮件。', 'error');
-      return;
-    }
-
-    await client.auth.signOut();
-    setStatus(status, '密码已更新。现在可以返回图片工作台登录。', 'success');
-  });
 }
 
 function scrubRecoveryUrl(): void {
